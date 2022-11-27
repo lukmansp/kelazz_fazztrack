@@ -47,9 +47,9 @@ void main() {
   }
 
   PerulanganMap();
-  // perulangan([2, 3, 4, 5]);
-  // var res = validasiSwitchCase(2);
-  // var result = validateUserAge(
-  //     name: "Fajar", age: 18, address: "Jakarta", school: "Fakultas");
-  // print("disini $result , val SwitchCase $res");
+  perulangan([2, 3, 4, 5]);
+  var res = validasiSwitchCase(2);
+  var result = validateUserAge(
+      name: "Fajar", age: 18, address: "Jakarta", school: "Fakultas");
+  print("disini $result , val SwitchCase $res");
 }
