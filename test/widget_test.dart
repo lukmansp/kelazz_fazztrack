@@ -1,4 +1,22 @@
 void main() {
+  bool palindrome(String inputanValue) {
+    for (var i = 0; i < inputanValue.length; i++) {
+      var kata = "fazztrack";
+
+      print("indek ${kata[kata.length - 1]}");
+      var firstIndex = i;
+      var lastIndex = print(
+          "disini pertama ${inputanValue[i]},  terahir ${inputanValue[inputanValue.length - i - 1]}");
+      if (inputanValue[i] != inputanValue[inputanValue.length - i - 1]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  var res = palindrome("katak");
+  print("uji coba $res");
+
   String validateUserAge(
       {age = int, name = String, address = String, school = String}) {
     bool isAge;
@@ -46,10 +64,10 @@ void main() {
     print("sesuadh  dirubah $listItem");
   }
 
-  PerulanganMap();
-  perulangan([2, 3, 4, 5]);
-  var res = validasiSwitchCase(2);
-  var result = validateUserAge(
-      name: "Fajar", age: 18, address: "Jakarta", school: "Fakultas");
-  print("disini $result , val SwitchCase $res");
+  // PerulanganMap();
+  // perulangan([2, 3, 4, 5]);
+  // var res = validasiSwitchCase(2);
+  // var result = validateUserAge(
+  //     name: "Fajar", age: 18, address: "Jakarta", school: "Fakultas");
+  // print("disini $result , val SwitchCase $res");
 }
