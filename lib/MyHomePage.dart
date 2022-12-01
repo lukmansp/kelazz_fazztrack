@@ -28,17 +28,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildInput() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Column(
         children: [
-          Container(
-            child: Text("nampilin kata $inputanUser"),
+          InkWell(
+            onTap: () {
+              print("mau ngapain ou");
+            },
+            child: Container(
+              child: Text("nampilin kata $inputanUser"),
+            ),
           ),
           Container(
+            padding: EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(15)),
             child: TextFormField(
+              decoration: InputDecoration(border: InputBorder.none),
               onChanged: (value) {
                 setState(() {
                   inputanUser = value;
@@ -46,7 +53,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 print("value $value");
               },
             ),
-          )
+          ),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                textStyle: TextStyle(fontSize: 16),
+              ),
+              onPressed: () {
+                print("on save");
+              },
+              child: Text("save"))
         ],
       ),
     );
@@ -139,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Text("isi kesamping"),
                     Text("isi kesamping")
                   ],
-                )
+                ),
               ],
             ));
       },
