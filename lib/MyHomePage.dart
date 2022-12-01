@@ -1,3 +1,4 @@
+import 'package:fazztrack_batch1/SecondPage.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -9,6 +10,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var inputanUser = "";
+  var tampunganPage2 = "";
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           Container(
+            child: Text(tampunganPage2),
+          ),
+          Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
                 color: Colors.grey[200],
@@ -58,8 +63,16 @@ class _MyHomePageState extends State<MyHomePage> {
               style: ElevatedButton.styleFrom(
                 textStyle: TextStyle(fontSize: 16),
               ),
-              onPressed: () {
-                print("on save");
+              onPressed: () async {
+                var result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          SecondPage(emailUser: inputanUser, umur: 15),
+                    ));
+                setState(() {
+                  tampunganPage2 = result;
+                });
               },
               child: Text("save"))
         ],
