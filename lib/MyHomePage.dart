@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:fazztrack_batch1/SecondPage.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,25 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   var inputanUser = "";
   var tampunganPage2 = "";
+  var _dio = Dio();
+
+  Future<List> getDataFromApi() async {
+    List setData = [];
+    var result = await _dio.get("https://jsonplaceholder.typicode.com/users");
+    setData.add(result.data);
+    return setData[0];
+  }
+
+  Future postDataToApi({String email, String password}) async {
+    var result = await _dio.post("http://23.20.237.176:8000/auth/login",
+        data: {"email": email, "password": password});
+    return result;
+  }
+  // @override
+  // void initState() {
+
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +45,45 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontSize: 24),
               ),
             )),
-        body: _buildInput());
+        body: FutureBuilder<List>(
+          future: getDataFromApi(),
+          builder: (context, snapshot) {
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      decoration: BoxDecoration(
+                          color: Colors.blue[400],
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Text(snapshot.data[index]['name']),
+                    ),
+                    Container(
+                      child: ElevatedButton(
+                          onPressed: () async {
+                            var result = await postDataToApi(
+                                email: "lukmanssefriyanto@gmail.com",
+                                password: "test123456");
+                            if (result.statusCode == 200) {
+                              Navigator.pushNamed(context, '/secondPage');
+                            } else {
+                              AlertDialog(
+                                title: Text("Failed login"),
+                              );
+                            }
+                            print('hasil login $result');
+                          },
+                          child: Text("Login")),
+                    )
+                  ],
+                );
+              },
+            );
+          },
+        ));
   }
 
   Widget _buildInput() {
