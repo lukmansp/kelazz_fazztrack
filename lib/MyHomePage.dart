@@ -70,8 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       builder: (context) =>
                           SecondPage(emailUser: inputanUser, umur: 15),
                     ));
-                setState(() {
-                  tampunganPage2 = result;
+                setState(() async {
+                  tampunganPage2 = await result;
                 });
               },
               child: Text("save"))
