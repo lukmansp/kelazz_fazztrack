@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:fazztrack_batch1/SecondPage.dart';
+import 'package:fazztrack_batch1/UI/view/SecondPage.dart';
+import 'package:fazztrack_batch1/UI/view/TampilData.dart';
+import 'package:fazztrack_batch1/UI/view/stateExample.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -26,6 +29,9 @@ class _MyHomePageState extends State<MyHomePage> {
         data: {"email": email, "password": password});
     return result;
   }
+
+  StateExample controller = Get.put(StateExample());
+
   // @override
   // void initState() {
 
@@ -45,45 +51,63 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontSize: 24),
               ),
             )),
-        body: FutureBuilder<List>(
-          future: getDataFromApi(),
-          builder: (context, snapshot) {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                      decoration: BoxDecoration(
-                          color: Colors.blue[400],
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Text(snapshot.data[index]['name']),
-                    ),
-                    Container(
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            var result = await postDataToApi(
-                                email: "lukmanssefriyanto@gmail.com",
-                                password: "test123456");
-                            if (result.statusCode == 200) {
-                              Navigator.pushNamed(context, '/secondPage');
-                            } else {
-                              AlertDialog(
-                                title: Text("Failed login"),
-                              );
-                            }
-                            print('hasil login $result');
-                          },
-                          child: Text("Login")),
-                    )
-                  ],
-                );
-              },
-            );
-          },
-        ));
+        body: GetBuilder<StateExample>(builder: (state) {
+          return Container(
+            child: ListView(
+              children: [
+                TampilData(stateExample: state),
+                Container(
+                    margin: EdgeInsets.only(left: 16),
+                    child: TextFormField(
+                      onChanged: (value) {
+                        state.handleInputUser(value);
+                      },
+                    )),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        var res = await Get.to(SecondPage(emailUser: "lukman"));
+                        state.handleInputUser(res);
+                      },
+                      child: Text("ke page dua")),
+                )
+              ],
+            ),
+          );
+        }));
+  }
+
+  Widget _buildTextField(Function onTap) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+            margin: EdgeInsets.only(bottom: 8),
+            child: Text(
+              "Input User Name",
+              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+            )),
+        Container(
+            height: 45,
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(left: 8, bottom: 5),
+            margin: EdgeInsets.only(right: 16),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.blue, width: 1),
+                borderRadius: BorderRadius.circular(5)),
+            child: TextFormField(
+              maxLines: 1,
+              style: TextStyle(fontSize: 16),
+              decoration: InputDecoration(
+                  hintText: "Masukan Nama Kamu",
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
+                  border: InputBorder.none,
+                  suffixStyle: TextStyle(fontSize: 12)),
+              onChanged: onTap,
+            ))
+      ],
+    );
   }
 
   Widget _buildInput() {

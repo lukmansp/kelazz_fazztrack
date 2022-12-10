@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SecondPage extends StatefulWidget {
   final String emailUser;
@@ -21,8 +22,9 @@ class _SecondPageState extends State<SecondPage> {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             // if (inputName.isNotEmpty) {
-            Navigator.pop(context, inputName);
+            // Navigator.pop(context, inputName);
             // }
+            Get.back(result: inputName);
           },
         ),
         title: Text("Ini page Kedua "),
@@ -77,7 +79,14 @@ class _SecondPageState extends State<SecondPage> {
               margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: ElevatedButton(
                   onPressed: () {
-                    _buildAlert(context);
+                    // _buildAlert(context);
+                    Get.defaultDialog(
+                        title: "Alert dari Get",
+                        confirm: ElevatedButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            child: Text("Okk")));
                   },
                   child: Text("Alert")),
             )
