@@ -36,12 +36,17 @@ class _UserViewState extends State<UserView> {
                         child: ListView.builder(
                       itemCount: modelView.setData.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(
-                              left: 8, top: 5, bottom: 5, right: 5),
-                          padding: EdgeInsets.all(16),
-                          decoration: BoxDecoration(color: Colors.amber),
-                          child: Text("${modelView.setData[index]['name']}"),
+                        return InkWell(
+                          onTap: () {
+                            
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                left: 8, top: 5, bottom: 5, right: 5),
+                            padding: EdgeInsets.all(16),
+                            decoration: BoxDecoration(color: Colors.amber),
+                            child: Text("${modelView.setData[index]['name']}"),
+                          ),
                         );
                       },
                     ))
