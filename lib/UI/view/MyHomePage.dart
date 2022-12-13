@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:fazztrack_batch1/UI/view/SecondPage.dart';
 import 'package:fazztrack_batch1/UI/view/TampilData.dart';
 import 'package:fazztrack_batch1/UI/view/stateExample.dart';
+import 'package:fazztrack_batch1/UI/viewModel/userViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return result;
   }
 
-  StateExample controller = Get.put(StateExample());
+  UserViewModel controller = Get.put(UserViewModel());
 
   // @override
   // void initState() {
@@ -51,24 +52,31 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontSize: 24),
               ),
             )),
-        body: GetBuilder<StateExample>(builder: (state) {
+        body: GetBuilder<UserViewModel>(builder: (viewModel) {
           return Container(
             child: ListView(
               children: [
-                TampilData(stateExample: state),
                 Container(
                     margin: EdgeInsets.only(left: 16),
                     child: TextFormField(
+                      decoration: InputDecoration(hintText: "Enter email"),
                       onChanged: (value) {
-                        state.handleInputUser(value);
+                        viewModel.emailUser(value);
+                      },
+                    )),
+                Container(
+                    margin: EdgeInsets.only(left: 16),
+                    child: TextFormField(
+                      decoration: InputDecoration(hintText: "Enter Password"),
+                      onChanged: (value) {
+                        viewModel.passwordUser(value);
                       },
                     )),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 16),
                   child: ElevatedButton(
                       onPressed: () async {
-                        var res = await Get.to(SecondPage(emailUser: "lukman"));
-                        state.handleInputUser(res);
+                        viewModel.userLogin(context);
                       },
                       child: Text("ke page dua")),
                 )
@@ -149,8 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 var result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          SecondPage(emailUser: inputanUser, umur: 15),
+                      builder: (context) => SecondPage(),
                     ));
                 setState(() async {
                   tampunganPage2 = await result;

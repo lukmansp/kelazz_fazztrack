@@ -1,10 +1,13 @@
+import 'package:fazztrack_batch1/UI/viewModel/userViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SecondPage extends StatefulWidget {
-  final String emailUser;
-  final int umur;
-  SecondPage({Key key, @required this.emailUser, this.umur}) : super(key: key);
+  final UserViewModel viewModel;
+  SecondPage({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
 
   @override
   State<SecondPage> createState() => _SecondPageState();
@@ -43,7 +46,7 @@ class _SecondPageState extends State<SecondPage> {
                         color: Colors.amber,
                         borderRadius: BorderRadius.circular(15)),
                     padding: EdgeInsets.all(24),
-                    child: Text("Box ${widget.emailUser}"),
+                    child: Text(widget.viewModel.selectedUser),
                   ),
                   Container(
                     decoration: BoxDecoration(
